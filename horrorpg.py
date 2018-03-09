@@ -1,36 +1,74 @@
 import random
-
+#Classes of weapons that the player can use
 class HersheyKiss:
-	"""A class to store HersheyKiss information"""
+	"""Attack Multiplier and Uses for HersheyKiss"""
 	def __init__(self):
 		self.mod = 1
 		self.uses = 1000
 
+	def getMod(self):
+		return self.mod
+
+	def getUses(self):
+		return self.uses
+
+	def setUses(self, value):
+		self.uses = value
+
 class SourStraw:
-	"""A class to store SourStraw information"""
+	"""Attack Multiplier and Uses for SourStraw"""
 	def __init__(self):
 		self.mod = random.uniform(1.0, 1.75)
-		self.uses = 2
+		self.uses = 10 # was 2
+
+	def getMod(self):
+		return self.mod
+
+	def getUses(self):
+		return self.uses
+
+	def setUses(self, value):
+		self.uses = value
 
 class ChocolateBar:
-	"""A class to store ChocolateBar information"""
+	"""Attack Multiplier and Uses for ChocolateBar"""
 	def __init__(self):
 		self.mod = random.uniform(2.0, 2.4)
-		self.uses = 4
+		self.uses = 12 # was 4
+
+	def getMod(self):
+		return self.mod
+
+	def getUses(self):
+		return self.uses
+
+	def setUses(self, value):
+		self.uses = value
 
 class NerdBomb:	
-	"""A class to store NerdBomb information"""
+	"""Attack Multiplier and Uses for NerdBomb"""
 	def __init__(self):
 		self.mod = random.uniform(3.5, 5)
-		self.uses = 1
+		self.uses = 5 # was 1
 
+	def getMod(self):
+		return self.mod
+
+	def getUses(self):
+		return self.uses
+
+	def setUses(self, value):
+		self.uses = value
+
+#The main character fighting to save his/her neighborhood
 class Player:
 	"""A class to store Player information"""
 	def __init__(self):
-		self.hp = random.randint(100, 126)
-		self.attack_val = random.randint(10, 21)
-		self.weapons = []
+		self.hp = random.randint(100, 126) #hit points for the player
+		self.attack_val = random.randint(10, 21) #default hit points without weapon multiplier
+		self.weapons = [] #list of weapons you have
 		while len(self.weapons) < 10:
+			#puts a random list of ten weapons in the player inventory
 			rand = random.randint(1,5)
 			if rand == 1:
 				w = HersheyKiss()
@@ -44,40 +82,101 @@ class Player:
 			elif rand == 4:
 				w = NerdBomb()
 				self.weapons.append(w)
+
+	def getHp(self):
+		return self.hp
+
+	def setHp(self, value):
+		self.hp = value
+
+	def getAttack(self):
+		return self.attack_val
+
+	def getWeapons(self):
+		return self.weapons
+
+#Classes of NPC's that will fight or help the player
 class Person:
-	"""A class to store Person information"""
+	"""Hit Points and Attack Value for the Person NPC"""
 	def __init__(self):
 		self.hp = 100
 		self.attack_val = -1
 
+	def getHp(self):
+		return self.hp
+
+	def setHp(self, value):
+		self.hp = value
+
+	def getAttack(self):
+		return self.attack_val
+
 class Zombie:
-	"""A class to store Zombie information"""
+	"""Hit Points and Attack Value for the Zombie NPC"""
 	def __init__(self):
 		self.hp = random.randint(50,101)
 		self.attack_val = random.randint(0,11)
 
+	def getHp(self):
+		return self.hp
+
+	def setHp(self, value):
+		self.hp = value
+
+	def getAttack(self):
+		return self.attack_val
+
 class Vampire:
-	"""A class to store Vampire information"""
+	"""Hit Points and Attack Value for the Vampire NPC"""
 	def __init__(self):
 		self.hp = random.randint(100,201)
 		self.attack_val = random.randint(10,21)
 
+	def getHp(self):
+		return self.hp
+
+	def setHp(self, value):
+		self.hp = value
+
+	def getAttack(self):
+		return self.attack_val
+
 class Ghoul:
-	"""A class to store Ghoul information"""
+	"""Hit Points and Attack Value for the Ghoul NPC"""
 	def __init__(self):
 		self.hp = random.randint(40,81)
 		self.attack_val = random.randint(15,31)
 
+	def getHp(self):
+		return self.hp
+
+	def setHp(self, value):
+		self.hp = value
+
+	def getAttack(self):
+		return self.attack_val
+
 class Werewolf:
-	"""A class to store Werewolf information"""
+	"""Hit Points and Attack Value for the Person NPC"""
 	def __init__(self):
 		self.hp = 200
 		self.attack_val = random.randint(0,41)
 
+	def getHp(self):
+		return self.hp
+
+	def setHp(self, value):
+		self.hp = value
+
+	def getAttack(self):
+		return self.attack_val
+
+#A Class for Homes that can be filled with monsters to fight
 class Home:
 	"""A class to store Home information"""
 	def __init__(self):
 		self.monsters = []
+		#Populate the Home with 0-4 random monsters
 		while len(self.monsters) < random.randint(0, 11):
 			rand = random.randint(1,5)
 			if rand == 1:
@@ -92,43 +191,60 @@ class Home:
 			elif rand == 4:
 				w = Werewolf()
 				self.monsters.append(w)
+		#number of monsters in this specific home
 		self.num_monsters = len(self.monsters)
 
+	def getMonsters(self):
+		return self.monsters
+
+	def setMonsters(self, index, value):
+		self.monsters[index] = value
+
+	def getNumMonsters(self):
+		return self.num_monsters
+
+	def setNumMonsters(self, value):
+		self.num_monsters = value
+
+#The Collection of houses the player must move through to kill the monsters
 class Neighborhood:
-	"""A class to store Neighborhood information"""
-	total_monsters = 0
+	"""A class to store Neighborhood information and the Game's Rules"""
+	total_monsters = 0 #The grand total of all the monsters from all homes
 	def __init__(self, height, width):
-		if (height > 0 and width > 0):
+		if (height > 0 and width > 0): #Set the width and height of the grid in which the homes will reside
 			self.height = height
 			self.width = width
 			self.grid = []
-			for i in range(width):
+			for i in range(width): #populate the grid with homes
 				self.grid.append([])
 				for j in range(height):
 					h = Home()
 					self.grid[i].append(h)
-					Neighborhood.total_monsters = Neighborhood.total_monsters + h.num_monsters
-					
+					Neighborhood.total_monsters = Neighborhood.total_monsters + h.getNumMonsters() #increment total number of monsters
+		else:
+			print("A Neighborhood can't be that size!")
+			self.grid = []
 
-	def quest_time(self, player):
+	def quest_time(self, player): #Moving through the Neighborhood to each home
 		for i in range(len(self.grid)):
 			for j in range(len(self.grid[i])):
-				if player.hp > 0 and Neighborhood.total_monsters > 0:
-					self.fightin_time(player, self.grid[i][j])
+				if player.getHp() > 0 and Neighborhood.total_monsters > 0:
+					self.fightin_time(player, self.grid[i][j]) #Start turn based combat in one house
 				if Neighborhood.total_monsters < 1:
-					print('The neighborhood is saved!')
+					print('The Neighborhood is saved!') #No more monsters!
 					return
-				elif player.hp < 1:
-					print("The Monsters have won...")
+				elif player.getHp() < 1:
+					print("The Monsters have won...") #You've been beaten
 					return
 
 	def fightin_time(self, player, house):
-		while house.num_monsters > 0 and player.hp > 0:
+		while house.getNumMonsters() > 0 and player.getHp() > 0: #Keep fighting until you or the monsters win
 			index = 0
-			for i in house.monsters:
-				for j in player.weapons:
-					if j.uses > 0 and i.hp > 0:
-						attack = player.attack_val * j.mod
+			for i in house.getMonsters():
+				for j in player.getWeapons():
+					if j.getUses() > 0 and i.getHp() > 0:
+						attack = player.getAttack() * j.getMod() #sets amount you will hurt monsters
+						#Rules for what hurts which monsters and how badly
 						if i.__class__.__name__ == "Zombie" and j.__class__.__name__ == "SourStraw":
 							attack = attack * 2
 						elif i.__class__.__name__ == "Vampire" and j.__class__.__name__ == "ChocolateBar":
@@ -139,20 +255,21 @@ class Neighborhood:
 							attack = 0
 						elif i.__class__.__name__ == "Person":
 							attack = 0
-						i.hp = i.hp - attack
-						if i.hp <= 0:
-							house.monsters[index] = Person()
-							house.num_monsters = house.num_monsters - 1
-							Neighborhood.total_monsters = Neighborhood.total_monsters - 1
+						i.setHp(i.getHp() - attack)
+						if i.getHp() <= 0: #if the monster dies, turn into a Person
+							house.setMonsters(index, Person())
+							house.setNumMonsters(house.getNumMonsters() - 1) #one less monster
+							Neighborhood.total_monsters = Neighborhood.total_monsters - 1 #one less monster
 						if j.__class__.__name__ <> "HersheyKiss":
-							j.uses = j.uses - 1
-				index = index + 1
-			for i in house.monsters:
-				player.hp = player.hp - i.attack_val
+							j.setUses(j.getUses() - 1) #decrement uses if not a HersheyKiss
+				index = index + 1 #helps determine place in list of monsters
+			for i in house.getMonsters(): #monsters' turn, allow them to attack once per monster
+				newHP = player.getHp() - i.getAttack()
+				player.setHp(newHP)
 
 def main():
 	p = Player()
-	n = Neighborhood(5,5)
+	n = Neighborhood(5,2)
 	n.quest_time(p)
 main()
 
