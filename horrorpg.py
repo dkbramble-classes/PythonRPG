@@ -85,7 +85,7 @@ class Neighborhood(Observer):
 	monsters_defeated = 0 #count of monsters defeated
 	""" """
 	def __init__(self, height, width):
-		if (height > 0 and width > 0): 
+		if (height > 0 and width > 0 and height < 101 and width < 101): 
 		#Set the width and height of the grid in which the homes will reside
 			self.height = height
 			self.width = width
@@ -240,5 +240,5 @@ class Neighborhood(Observer):
 
 if __name__ == "__main__":
 	p = Player()
-	n = Neighborhood(5,5) #set grid size
+	n = Neighborhood(5, 5) #set grid size
 	n.display_map(p) #start game
